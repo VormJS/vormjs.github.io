@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Georgian Translit</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  >
+
+  <style>
+    .main {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #ddd;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .translator {
+      flex-grow: 1;
+    }
+
+    .translator .control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .translator .control .form-select {
+      width: 60px;
+    }
+
+    .m-l-a {
+      margin-left: auto;
+    }
+
+    .info .alphabet-container {
+      display: flex;
+      align-items: flex-start;
+      column-gap: 20px;
+    }
+
+    .alphabet-table tr td + td {
+      padding-left: 8px;
+    }
+    
+    .dropdown-menu.show.button-container {
+      padding: 0;
+    }
+
+    .dropdown-menu.show.button-container button {
+      width: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="translator card">
+      <div>
+        <h3>Перевод</h3>
+      </div>
+
+      <textarea
+        id="text-input"
+        class="form-control"
+        rows="8"
+      ></textarea>
+
+      <div class="control">
+        <label>Буква для замены</label>
+        <select
+          class="form-select form-select-sm"
+          id="selected-letter"
+        >
+          <option value="ა">ა</option>
+          <option value="ბ">ბ</option>
+          <option value="გ">გ</option>
+          <option value="დ">დ</option>
+          <option value="ე">ე</option>
+          <option value="ვ">ვ</option>
+          <option value="ზ">ზ</option>
+          <option value="თ">თ</option>
+          <option value="ი">ი</option>
+          <option value="კ">კ</option>
+          <option value="ლ">ლ</option>
+          <option value="მ">მ</option>
+          <option value="ნ">ნ</option>
+          <option value="ო">ო</option>
+          <option value="პ">პ</option>
+          <option value="ჟ">ჟ</option>
+          <option value="რ">რ</option>
+          <option value="ს">ს</option>
+          <option value="ტ">ტ</option>
+          <option value="უ">უ</option>
+          <option value="ფ">ფ</option>
+          <option value="ქ">ქ</option>
+          <option value="ღ">ღ</option>
+          <option value="ყ">ყ</option>
+          <option value="შ">შ</option>
+          <option value="ჩ">ჩ</option>
+          <option value="ც">ც</option>
+          <option value="ძ">ძ</option>
+          <option value="წ">წ</option>
+          <option value="ჭ">ჭ</option>
+          <option value="ხ">ხ</option>
+          <option value="ჯ">ჯ</option>
+          <option value="ჰ">ჰ</option>
+        </select>
+
+        <div class="btn-group">
+          <button
+            class="btn btn-primary btn-sm"
+            type="button"
+            onclick="changeLetter()"
+          >Заменить</button>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          ><span class="visually-hidden"></span></button>
+          <ul class="dropdown-menu dropdown-menu-end button-container">
+            <button
+              class="btn btn-primary btn-sm"
+              type="button"
+              onclick="changeLetter(true)"
+            >Заменить поверх</button>
+          </ul>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-primary btn-sm m-l-a"
+          onclick="changeAllLetters()"
+        >Заменить все</button>
+      </div>
+
+      <textarea
+        id="text-output"
+        class="form-control"
+        rows="8"
+        readonly
+      ></textarea>
+    </div>
+
+    <div class="info card">
+      <div>
+        <h3>Алфавит</h2>
+      </div>
+
+      <div class="alphabet-container">
+        <table class="alphabet-table">
+          <tbody>
+            <tr>
+              <td>ა</td>
+              <td>а</td>
+            </tr>
+            <tr>
+              <td>ბ</td>
+              <td>б</td>
+            </tr>
+            <tr>
+              <td>გ</td>
+              <td>г</td>
+            </tr>
+            <tr>
+              <td>დ</td>
+              <td>д</td>
+            </tr>
+            <tr>
+              <td>ე</td>
+              <td>э, е</td>
+            </tr>
+            <tr>
+              <td>ვ</td>
+              <td>в</td>
+            </tr>
+            <tr>
+              <td>ზ</td>
+              <td>з</td>
+            </tr>
+            <tr>
+              <td>თ</td>
+              <td>т</td>
+            </tr>
+            <tr>
+              <td>ი</td>
+              <td>и</td>
+            </tr>
+            <tr>
+              <td>კ</td>
+              <td>к</td>
+            </tr>
+            <tr>
+              <td>ლ</td>
+              <td>л</td>
+            </tr>
+            <tr>
+              <td>მ</td>
+              <td>м</td>
+            </tr>
+            <tr>
+              <td>ნ</td>
+              <td>н</td>
+            </tr>
+            <tr>
+              <td>ო</td>
+              <td>о</td>
+            </tr>
+            <tr>
+              <td>პ</td>
+              <td>п</td>
+            </tr>
+            <tr>
+              <td>ჟ</td>
+              <td>ж</td>
+            </tr>
+            <tr>
+              <td>რ</td>
+              <td>р</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table  class="alphabet-table">
+          <tbody>
+            <tr>
+              <td>ს</td>
+              <td>с</td>
+            </tr>
+            <tr>
+              <td>ტ</td>
+              <td>т</td>
+            </tr>
+            <tr>
+              <td>უ</td>
+              <td>у</td>
+            </tr>
+            <tr>
+              <td>ფ</td>
+              <td>п, пф, ф</td>
+            </tr>
+            <tr>
+              <td>ქ</td>
+              <td>к</td>
+            </tr>
+            <tr>
+              <td>ღ</td>
+              <td>г</td>
+            </tr>
+            <tr>
+              <td>ყ</td>
+              <td>к</td>
+            </tr>
+            <tr>
+              <td>შ</td>
+              <td>ш</td>
+            </tr>
+            <tr>
+              <td>ჩ</td>
+              <td>ч</td>
+            </tr>
+            <tr>
+              <td>ც</td>
+              <td>тс</td>
+            </tr>
+            <tr>
+              <td>ძ</td>
+              <td>дз</td>
+            </tr>
+            <tr>
+              <td>წ</td>
+              <td>ц</td>
+            </tr>
+            <tr>
+              <td>ჭ</td>
+              <td>ч</td>
+            </tr>
+            <tr>
+              <td>ხ</td>
+              <td>х, кх</td>
+            </tr>
+            <tr>
+              <td>ჯ</td>
+              <td>дж</td>
+            </tr>
+            <tr>
+              <td>ჰ</td>
+              <td>х</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  const LETTER_MAP = {
+    ['ა']: 'а',
+    ['ბ']: 'б',
+    ['გ']: 'г',
+    ['დ']: 'д',
+    ['ე']: 'е',
+    ['ვ']: 'в',
+    ['ზ']: 'з',
+    ['თ']: 'т',
+    ['ი']: 'и',
+    ['კ']: 'к',
+    ['ლ']: 'л',
+    ['მ']: 'м',
+    ['ნ']: 'н',
+    ['ო']: 'о',
+    ['პ']: 'п',
+    ['ჟ']: 'ж',
+    ['რ']: 'р',
+    ['ს']: 'с',
+    ['ტ']: 'т',
+    ['უ']: 'у',
+    ['ფ']: 'ф',
+    ['ქ']: 'к',
+    ['ღ']: 'г',
+    ['ყ']: 'к',
+    ['შ']: 'ш',
+    ['ჩ']: 'ч',
+    ['ც']: 'тс',
+    ['ძ']: 'дз',
+    ['წ']: 'ц',
+    ['ჭ']: 'ч',
+    ['ხ']: 'х',
+    ['ჯ']: 'дж',
+    ['ჰ']: 'х',
+
+    ['а']: 'ა',
+    ['б']: 'ბ',
+    ['в']: 'ვ',
+    ['г']: 'გ',
+    ['д']: 'დ',
+    ['е']: 'ე',
+    ['ё']: 'იო',
+    ['ж']: 'ჟ',
+    ['з']: 'ზ',
+    ['и']: 'ი',
+    ['й']: 'ი',
+    ['к']: 'კ',
+    ['л']: 'ლ',
+    ['м']: 'მ',
+    ['н']: 'ნ',
+    ['о']: 'ო',
+    ['п']: 'პ',
+    ['р']: 'რ',
+    ['с']: 'ს',
+    ['т']: 'ტ',
+    ['у']: 'უ',
+    ['ф']: 'ფ',
+    ['х']: 'ხ',
+    ['ц']: 'წ',
+    ['ч']: 'ჩ',
+    ['ш']: 'შ',
+    ['щ']: 'შჩ',
+    ['ъ']: '',
+    ['ы']: 'ი',
+    ['ь']: '',
+    ['э']: 'ე',
+    ['ю']: 'იუ',
+    ['я']: 'ია',
+  };
+
+  const changeLetter = (override) => {
+
+    const inputValue = (override 
+      ? document.querySelector('#text-output').value.toLowerCase()
+      : document.querySelector('#text-input').value.toLowerCase()
+    );
+
+    const selectedLetter = document.querySelector('#selected-letter').value;
+    const output = document.querySelector('#text-output');
+
+    const lettersToChange = Object.entries(LETTER_MAP).filter(entry => entry[1] === selectedLetter).map(entry => entry[0])
+
+    output.value = lettersToChange.reduce((text, letter) => {
+      return text.replaceAll(letter, selectedLetter);
+    }, inputValue);
+  }
+
+  const changeAllLetters = () => {
+    const inputValue = document.querySelector('#text-input').value.toLowerCase();
+    const output = document.querySelector('#text-output');
+
+    output.value = inputValue.split('').map(letter => LETTER_MAP[letter] || letter).join('');
+  };
+</script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+  crossorigin="anonymous"
+></script>
+
+</html>
