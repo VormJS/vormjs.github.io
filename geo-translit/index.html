@@ -401,7 +401,10 @@
     const selectedLetter = document.querySelector('#selected-letter').value;
     const output = document.querySelector('#text-output');
 
-    const lettersToChange = Object.entries(LETTER_MAP).filter(entry => entry[1] === selectedLetter).map(entry => entry[0])
+    const lettersToChange = [...new Set([
+      ...Object.entries(LETTER_MAP).filter(entry => entry[1] === selectedLetter).map(entry => entry[0]),
+      ...Object.entries(LETTER_MAP).filter(entry => entry[0] === selectedLetter).map(entry => entry[1]),
+    ])];
 
     output.value = lettersToChange.reduce((text, letter) => {
       return text.replaceAll(letter, selectedLetter);
